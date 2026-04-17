@@ -30,5 +30,6 @@ jobs:
           pr_number: ${{ github.event.number }} # Passes the pull request number as an environment variable
           ai_provider: "google" # Specifies the AI provider to use (e.g., "azure", "openai", etc.)
           google_api_key: ${{ secrets.GOOGLE_API_KEY }} # Passes the Google API key as an environment variable
-          google_model: "gemini-3-flash-preview" # Specifies the Google model to use
+          google_model: "gemini-2.5-flash" # Uses a stable Gemini model supported by Google's OpenAI-compatible endpoint
+          fail_action_if_review_failed: "true" # Marks the workflow as failed if the AI review call fails
           # Additional configuration options for the AI code review can be added here
