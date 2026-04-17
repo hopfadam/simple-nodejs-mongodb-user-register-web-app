@@ -1,0 +1,34 @@
+# The name of the workflow as it will appear in the "Actions" tab on GitHub
+name: RegisterApp CI Pipeline
+
+# The "on" keyword defines the events that trigger the workflow
+on:
+  # Specifies that this workflow runs on a "pull_request" event
+  pull_request:
+    types: [ opened, synchronize, reopened, ready_for_review ] # Triggers on PR opened, updated, reopened, or marked ready for review
+
+# The "jobs" section groups all the tasks to be executed
+jobs:
+  ai-code-review:
+    # A descriptive name for the job that will appear in the UI
+    name: AI Code Review
+    # Specifies the type of virtual machine (runner) to use (latest Ubuntu version)
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read  # Grants read-only access to the repository contents for this job
+      pull-requests: write # Grants write access to pull requests, allowing the job to post comments or update PR status
+    # "steps" is a list of individual tasks that run sequentially within the job
+    steps:
+      - name: AI Code Review
+        # Uses a pre-defined action from the GitHub Marketplace to run a Docker container
+        uses: AleksandrFurmenkovOfficial/ai-code-review@v1.0
+        with:
+          # Passes the GitHub token as an environment variable to the Docker container for authentication
+          token: ${{ secrets.GITHUB_TOKEN }}
+          owner: ${{ github.repository_owner }} # Passes the repository owner as an environment variable
+          repo: ${{ github.event.repository.name }} # Passes the repository name as an environment variable
+          pr_number: ${{ github.event.number }} # Passes the pull request number as an environment variable
+          ai_provider: "google" # Specifies the AI provider to use (e.g., "azure", "openai", etc.)
+          google_api_key: ${{ secrets.GOOGLE_API_KEY }} # Passes the Google API key as an environment variable
+          google_model: "gemini-3-flash-preview" # Specifies the Google model to use
+          # Additional configuration options for the AI code review can be added here
