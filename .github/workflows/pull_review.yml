@@ -11,7 +11,7 @@ on:
 jobs:
   ai-code-review:
     # A descriptive name for the job that will appear in the UI
-    name: AI Code Review
+    # name: AI Code Review
     # Specifies the type of virtual machine (runner) to use (latest Ubuntu version)
     runs-on: ubuntu-latest
     permissions:
