@@ -28,7 +28,7 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           owner: ${{ github.repository_owner }} # Passes the repository owner as an environment variable
           repo: ${{ github.event.repository.name }} # Passes the repository name as an environment variable
-          pr_number: ${{ github.event.number }} # Passes the pull request number as an environment variable
+          #pr_number: ${{ github.event.number }} # Passes the pull request number as an environment variable
           ai_provider: "google" # Specifies Google as the AI provider
           google_api_key: ${{ secrets.GOOGLE_API_KEY }} # Passes the Google API key as an environment variable
           #google_model: "gemini-pro" # Specifies the Google model to use
