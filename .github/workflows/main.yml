@@ -3,24 +3,47 @@ name: RegisterApp CI Pipeline
 
 # The "on" keyword defines the events that trigger the workflow
 on:
-  # Specifies that this workflow runs on a "push" event
+  # Specifies that this workflow runs on a "pull_request" event
   push:
-    # Limits the execution to pushes made specifically to the "main" branch
-    branches: [ "main" ]
+    branches: [ "main" ] # Limits the execution to pushes made specifically to the "main" branch
+    #types: [ opened, synchronize, reopened, ready_for_review ] # Triggers on PR opened, updated, reopened, or marked ready for review
 
 # The "jobs" section groups all the tasks to be executed
 jobs:
-  # Defines a specific job named "build"
-  build:
+  ai-code-review:
+    # A descriptive name for the job that will appear in the UI
+    # name: AI Code Review
     # Specifies the type of virtual machine (runner) to use (latest Ubuntu version)
     runs-on: ubuntu-latest
-
+    permissions:
+      contents: read  # Grants read-only access to the repository contents for this job
+      pull-requests: write # Grants write access to pull requests, allowing the job to post comments or update PR status
     # "steps" is a list of individual tasks that run sequentially within the job
     steps:
-      # Step 1: Checks out the code so the runner can access it
-      - name: Checkout repository  # Display name for the UI
-        uses: actions/checkout@v4  # Uses the official pre-built action to clone your repo
+      - name: AI Code Review
+        # Uses a pre-defined action from the GitHub Marketplace to run a Docker container
+        uses: AleksandrFurmenkovOfficial/ai-code-review@v1.0
+        with:
+          # Passes the GitHub token as an environment variable to the Docker container for authentication
+          token: ${{ secrets.GITHUB_TOKEN }}
+          owner: ${{ github.repository_owner }} # Passes the repository owner as an environment variable
+          repo: ${{ github.event.repository.name }} # Passes the repository name as an environment variable
+          pr_number: ${{ github.event.number }} # Passes the pull request number as an environment variable
+          ai_provider: "google" # Specifies Google as the AI provider
+          google_api_key: ${{ secrets.GOOGLE_API_KEY }} # Passes the Google API key as an environment variable
+          #google_model: "gemini-pro" # Specifies the Google model to use
+          fail_action_if_review_failed: "true" # Marks the workflow as failed if the AI review call fails
+          # Additional configuration options for the AI code review can be added here
 
-      # Step 2: A simple test step to verify the pipeline works
-      - name: Simple Log Message          # Display name for the UI
-        run: echo "CI Pipeline Triggered Successfully!" # Runs a shell command to print text to the logs
+# Potential solutions:
+# env:
+#   OPENAI_BASE_URL: https://generativelanguage.googleapis.com/v1beta/openai
+
+  # env:
+  #   OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+  #   OPENAI_BASE_URL: https://api.openai.com/v1
+  #   OPENAI_MODEL: gpt-4o-mini
+
+  # env:
+  #   OPENAI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+  #   OPENAI_BASE_URL: https://generativelanguage.googleapis.com/v1beta/openai
