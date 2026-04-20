@@ -7,7 +7,6 @@ on:
   pull_request:
     types: [ opened, synchronize, reopened, ready_for_review ] # Triggers on PR opened, updated, reopened, or marked ready for review
 
-
 # The "jobs" section groups all the tasks to be executed
 jobs:
   ai-code-review:
