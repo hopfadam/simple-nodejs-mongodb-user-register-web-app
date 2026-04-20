@@ -30,7 +30,7 @@ jobs:
           pr_number: ${{ github.event.number }} # Passes the pull request number as an environment variable
           ai_provider: "openai" # Specifies OpenAI as the AI provider
           openai_api_key: ${{ secrets.OPENAI_API_KEY }} # Passes the OpenAI API key as an environment variable
-          openai_model: "gpt-5.2" # Specifies the OpenAI model to use
+          #openai_model: "gpt-5.2" # Specifies the OpenAI model to use
           fail_action_if_review_failed: "true" # Marks the workflow as failed if the AI review call fails
           # Additional configuration options for the AI code review can be added here
 
