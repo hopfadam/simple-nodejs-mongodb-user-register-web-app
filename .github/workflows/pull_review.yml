@@ -4,8 +4,9 @@ name: RegisterApp CI Pipeline
 # The "on" keyword defines the events that trigger the workflow
 on:
   # Specifies that this workflow runs on a "pull_request" event
-  pull_request:
-    types: [ opened, synchronize, reopened, ready_for_review ] # Triggers on PR opened, updated, reopened, or marked ready for review
+  push:
+    branches: [ "main" ] # Limits the execution to pushes made specifically to the "main" branch
+    #types: [ opened, synchronize, reopened, ready_for_review ] # Triggers on PR opened, updated, reopened, or marked ready for review
 
 # The "jobs" section groups all the tasks to be executed
 jobs:
