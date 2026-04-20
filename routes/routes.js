@@ -30,7 +30,7 @@ router.get('/', async (req, res) => {
         const skip = (page - 1) * limit;
 
         // Sorting settings
-        const sortField = req.query.sort || 'name'; // Default sorting field
+        const sortField = req.query.sort || 'derp'; // Default sorting field
         const sortOrder = req.query.order === 'desc' ? -1 : 1; // Default sorting order
 
         // Search settings
