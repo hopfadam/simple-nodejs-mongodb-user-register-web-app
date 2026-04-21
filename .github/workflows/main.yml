@@ -1,4 +1,4 @@
-# The name of the workflow as it will appear in the "Actions" tab on GitHub
+\# The name of the workflow as it will appear in the "Actions" tab on GitHub
 name: RegisterApp CI Pipeline
 
 # The "on" keyword defines the events that trigger the workflow
@@ -18,7 +18,7 @@ jobs:
     steps:
       - name: AI Code Review
         # Uses a pre-defined action from the GitHub Marketplace to run a Docker container
-        uses: AleksandrFurmenkovOfficial/ai-code-review@v1.0
+        uses: AleksandrFurmenkovOfficial/ai-code-review@v0.9
         with:
           # Passes the GitHub token as an environment variable to the Docker container for authentication
           token: ${{ secrets.GITHUB_TOKEN }}
@@ -30,3 +30,25 @@ jobs:
           #google_model: "gemini-pro" # Specifies the Google model to use
           fail_action_if_review_failed: "true" # Marks the workflow as failed if the AI review call fails
           # Additional configuration options for the AI code review can be added here
+
+  # ============================
+  # PART 3: CI QUALITY GATE (ADDED)
+  # ============================
+  run-tests:
+    runs-on: ubuntu-latest
+    needs: ai-code-review # Ensures tests only run AFTER AI review passes
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4  # Pulls the code into the runner
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'  # Required Node version for this project
+
+      - name: Install dependencies
+        run: npm ci  # Clean install for CI environments (faster + more reliable than npm install)
+
+      - name: Run Jest tests
+        run: npm test  # Executes the test suite (this is your QUALITY GATE)

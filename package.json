@@ -3,10 +3,10 @@
   "version": "1.0.0",
   "description": "A simple project to learn mongobd use with node-js.",
   "main": "main.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon app.js"
-  },
+"scripts": {
+  "start": "nodemon app.js",
+  "test": "jest"
+},
   "keywords": [
     "nodejs",
     "development",
@@ -26,6 +26,8 @@
     "multer": "^1.4.5-lts.1"
   },
   "devDependencies": {
-    "nodemon": "^3.1.4"
+    "jest": "^30.3.0",
+    "nodemon": "^3.1.4",
+    "supertest": "^7.2.2"
   }
 }
