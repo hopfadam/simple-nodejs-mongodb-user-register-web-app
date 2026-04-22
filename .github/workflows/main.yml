@@ -1,4 +1,4 @@
-\# The name of the workflow as it will appear in the "Actions" tab on GitHub
+# The name of the workflow as it will appear in the "Actions" tab on GitHub
 name: RegisterApp CI Pipeline
 
 # The "on" keyword defines the events that trigger the workflow
