@@ -10,9 +10,6 @@ COPY package*.json ./
 # Install app dependencies
 RUN npm install
 
-#break everything
-break it all down
-
 # Bundle app source
 COPY . .
 
