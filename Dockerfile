@@ -13,7 +13,7 @@ RUN npm install
 
 #break everything
 break it all down
-
+RUN nothing & RUN SOMETHING
 
 # Bundle app source
 COPY . .
