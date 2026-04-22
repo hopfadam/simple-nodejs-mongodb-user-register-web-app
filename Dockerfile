@@ -13,8 +13,7 @@ RUN npm install
 
 #break everything
 break it all down
-RUN nothing & RUN SOMETHING
-
+RUN invalidcommand --does-not-exist
 # Bundle app source
 COPY . .
 
